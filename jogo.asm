@@ -522,11 +522,120 @@ main:
 	addi $6, $0, 256
 	addi $7, $0, 128
 	jal desenhaImagem
+	
+	lui $20, 0x1001
+	lui $21, 0x1001
+	lui $22, 0x1001
+	addi $20, $20, 275456 # buffer para o jogador
+	addi $21, $21, 45312 # sprite atual do jogador
+	addi $22, $22, 33024 # limite do loop subirEscada
+	addi $23, $23, 4 # altura do personagem ao desenhar (a medida em que sobe as escada essa altura cresce ate o padrao, 16)
+	
+	lui $24, 0x1001
+	addi $24, $24, 262144
+	
+	lui $19, 0x1001
+	addi $19, $19, 263168 
+	add $19, $19, $24 # soma sprites
 
-	addi $4, $0, 300000
+subirEscada:
+	add $4, $0, $21
+	add $5, $0, $20
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal salvaTela
+
+	add $4, $0, $24 # endereco na memoria do que vou desenhar
+	add $5, $0, $21
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal desenhaImagem
+
+	addi $4, $0, 100000
 	jal timerDelay
+	
+	add $4, $0, $20
+	add $5, $0, $21
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal desenhaImagem # restaura cenario
+	
+	addi $21, $21, -2048
+	addi $23, $23, 2
 
-	# carrega segundo cenario
+	# troca animacao (pra parecer que o link ta andando)
+	sub $24, $19, $24
+	bne $21, $22, subirEscada
+
+	addi $22, $22, 28672  # (1024 x 28 pra descer um bloco e mais um pouquinho)
+linkDescendo:
+	add $4, $0, $21
+	add $5, $0, $20
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal salvaTela
+
+	add $4, $0, $24 # endereco na memoria do que vou desenhar
+	add $5, $0, $21
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal desenhaImagem
+	
+	addi $4, $0, 80000
+	jal timerDelay
+	
+	add $4, $0, $20
+	add $5, $0, $21
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal desenhaImagem # restaura cenario
+	
+	addi $21, $21, 2048
+	# troca animacao (pra parecer que o link ta andando)
+	sub $24, $19, $24
+	bne $21, $22, linkDescendo
+	
+# agora inicia virada pro lado
+	lui $24, 0x1001
+	addi $24, $24, 264192
+	
+	lui $19, 0x1001
+	addi $19, $19, 265216
+	add $19, $19, $24 # soma sprites
+	
+	addi $22, $22, 704
+	
+linkAndaAteParede:	
+	# desenha ele de lado
+	add $4, $0, $21
+	add $5, $0, $20
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal salvaTela
+
+	add $4, $0, $24 # endereco na memoria do que vou desenhar
+	add $5, $0, $21
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal desenhaImagem
+	
+	addi $4, $0, 50000
+	jal timerDelay
+	
+	add $4, $0, $20
+	add $5, $0, $21
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal desenhaImagem # restaura cenario
+	
+	addi $21, $21, 12
+	# troca animacao (pra parecer que o link ta andando)
+	sub $24, $19, $24
+	#bne $21, $22, linkAndaAteParede
+	slt $18, $21, $22 # se posicao atual > borda, continua andando
+	bne $18, $0, linkAndaAteParede
+
+# carrega segundo cenario
 	lui $4, 0x1001
 	lui $5, 0x1001
 	addi $4, $4, 131072
@@ -535,6 +644,22 @@ main:
 	addi $7, $0, 128
 	jal desenhaImagem
 
+# desenha o personagem no canto esquerdo
+	addi $21, $21, -960
+	# desenha ele de lado
+	add $4, $0, $21
+	add $5, $0, $20
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal salvaTela
+
+	add $4, $0, $24 # endereco na memoria do que vou desenhar
+	add $5, $0, $21
+	addi $6, $0, 16
+	add $7, $0, $23
+	jal desenhaImagem
+
+# prepara dados para o loopJogo
 	# dados do NPC 1
 	lui $15, 0x1001
 	lui $18, 0x1001
@@ -543,7 +668,7 @@ main:
 	addi $16, $0, 1024 # passo vertical
 	addi $17, $0, -12 # passo horizontal
 	addi $18, $18, 273408 # sprite (npc 1)
-	addi $19, $19, 275456 # buffer (proximo espaco livre depois do npc 2)
+	addi $19, $19, 276480 # buffer (proximo espaco livre depois do npc 2)
 
 	# dados do NPC 2
 	lui $20, 0x1001
@@ -553,7 +678,7 @@ main:
 	addi $21, $0, -1024 # passo vertical
 	addi $22, $0, -12 # passo horizontal
 	addi $23, $23, 274432 # sprite (npc 2)
-	addi $24, $24, 276480 # buffer (depois do buffer anterior)
+	addi $24, $24, 277504 # buffer (depois do buffer anterior)
 
 	# j desenhaNPCs. aqui to desenhando uma vez pq o loop inicia apagando
 	# salva fundo e desenha NPC 1
@@ -676,6 +801,10 @@ loopJogo:
 	jal timerDelay
 
 	j loopJogo
+
+fim:
+	addi $2, $0, 10
+	syscall
 	
 # rotina que atualiza posicao do NPC com recuo (desvio vertical) e desvio horizontal ao colidir verticalmente
 # entradas: $4 = posicao atual, $5 = passo vertical, $6 = passo horizontal
