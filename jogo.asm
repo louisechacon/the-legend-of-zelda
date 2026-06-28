@@ -514,22 +514,23 @@
 
 .text
 main:
-	# carrega primeiro cenario
-	lui $4, 0x1001
-	lui $5, 0x1001
-	addi $4, $4, 0
-	addi $5, $5, 0
-	addi $6, $0, 256
-	addi $7, $0, 128
-	jal desenhaImagem
+	lui $8, 0x1001 # inicio da memoria
+	addi $25, $8, 275456 # inicio da memoria livre
 	
-	lui $20, 0x1001
-	lui $21, 0x1001
-	lui $22, 0x1001
-	addi $20, $20, 275456 # buffer para o jogador
-	addi $21, $21, 45312 # sprite atual do jogador
-	addi $22, $22, 33024 # limite do loop subirEscada
-	addi $23, $23, 4 # altura do personagem ao desenhar (a medida em que sobe as escada essa altura cresce ate o padrao, 16)
+	# carrega primeiro cenario
+	add $4, $25, $0
+	sw $8, 0($4) # origem (o que vai desenhar)
+	sw $8, 4($4) # destino (onde vai desenhar)
+	addi $5, $0, 256 # largura
+	addi $6, $0, 128 # altura
+	jal desenhaImagem
+
+# roda animacao inicial
+	# dados do link da animacao
+	addi $20, $8, 275456 # buffer para o link
+	addi $21, $8, 45312 # sprite atual do link
+	addi $22, $8, 33024 # limite do loop subirEscada
+	addi $23, $0, 4 # altura do personagem ao desenhar (a medida em que sobe as escada essa altura cresce ate o padrao, 16)
 	
 	lui $24, 0x1001
 	addi $24, $24, 262144
@@ -539,26 +540,34 @@ main:
 	add $19, $19, $24 # soma sprites
 
 subirEscada:
-	add $4, $0, $21
-	add $5, $0, $20
-	addi $6, $0, 16
-	add $7, $0, $23
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	sw $21, 0($4)		# origem = $21
+	sw $20, 4($4)		# destino = $20
+	addi $5, $0, 16		# largura
+	add $6, $0, $23		# altura
 	jal salvaTela
 
-	add $4, $0, $24 # endereco na memoria do que vou desenhar
-	add $5, $0, $21
-	addi $6, $0, 16
-	add $7, $0, $23
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $24, 0($4)		# origem
+	sw $21, 4($4)		# destino
+	addi $5, $0, 16		# largura
+	add $6, $0, $23		# altura
 	jal desenhaImagem
 
-	addi $4, $0, 100000
-	jal timerDelay
+    	lui  $4, 0x1001
+    	addi $4, $4, 278528 # inicio da memoria livre
+    	addi $5, $0, 100000
+    	jal  timerDelay
 	
-	add $4, $0, $20
-	add $5, $0, $21
-	addi $6, $0, 16
-	add $7, $0, $23
-	jal desenhaImagem # restaura cenario
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $20, 0($4)		# origem
+	sw $21, 4($4)		# destino
+	addi $5, $0, 16		# largura
+	add $6, $0, $23		# altura
+	jal desenhaImagem
 	
 	addi $21, $21, -2048
 	addi $23, $23, 2
@@ -569,26 +578,34 @@ subirEscada:
 
 	addi $22, $22, 28672  # (1024 x 28 pra descer um bloco e mais um pouquinho)
 linkDescendo:
-	add $4, $0, $21
-	add $5, $0, $20
-	addi $6, $0, 16
-	add $7, $0, $23
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	sw $21, 0($4)		# origem
+	sw $20, 4($4)		# destino
+	addi $5, $0, 16		# largura
+	add $6, $0, $23		# altura
 	jal salvaTela
 
-	add $4, $0, $24 # endereco na memoria do que vou desenhar
-	add $5, $0, $21
-	addi $6, $0, 16
-	add $7, $0, $23
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $24, 0($4)
+	sw $21, 4($4)
+	addi $5, $0, 16
+	add $6, $0, $23
 	jal desenhaImagem
 	
-	addi $4, $0, 80000
-	jal timerDelay
+    	lui  $4, 0x1001
+    	addi $4, $4, 278528 # inicio da memoria livre
+    	addi $5, $0, 80000
+    	jal  timerDelay
 	
-	add $4, $0, $20
-	add $5, $0, $21
-	addi $6, $0, 16
-	add $7, $0, $23
-	jal desenhaImagem # restaura cenario
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $20, 0($4)
+	sw $21, 4($4)
+	addi $5, $0, 16
+	add $6, $0, $23
+	jal desenhaImagem
 	
 	addi $21, $21, 2048
 	# troca animacao (pra parecer que o link ta andando)
@@ -607,26 +624,34 @@ linkDescendo:
 	
 linkAndaAteParede:	
 	# desenha ele de lado
-	add $4, $0, $21
-	add $5, $0, $20
-	addi $6, $0, 16
-	add $7, $0, $23
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	sw $21, 0($4)		# origem
+	sw $20, 4($4)		# destino
+	addi $5, $0, 16		# largura
+	add $6, $0, $23		# altura
 	jal salvaTela
 
-	add $4, $0, $24 # endereco na memoria do que vou desenhar
-	add $5, $0, $21
-	addi $6, $0, 16
-	add $7, $0, $23
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $24, 0($4)
+	sw $21, 4($4)
+	addi $5, $0, 16
+	add $6, $0, $23
 	jal desenhaImagem
 	
-	addi $4, $0, 50000
-	jal timerDelay
+    	lui  $4, 0x1001
+    	addi $4, $4, 278528 # inicio da memoria livre
+    	addi $5, $0, 50000
+    	jal  timerDelay
 	
-	add $4, $0, $20
-	add $5, $0, $21
-	addi $6, $0, 16
-	add $7, $0, $23
-	jal desenhaImagem # restaura cenario
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $20, 0($4)
+	sw $21, 4($4)
+	addi $5, $0, 16
+	add $6, $0, $23
+	jal desenhaImagem
 	
 	addi $21, $21, 12
 	# troca animacao (pra parecer que o link ta andando)
@@ -637,29 +662,43 @@ linkAndaAteParede:
 
 # carrega segundo cenario
 	lui $4, 0x1001
-	lui $5, 0x1001
-	addi $4, $4, 131072
-	addi $5, $5, 0
-	addi $6, $0, 256
-	addi $7, $0, 128
+	addi $4, $4, 278528
+	lui $9, 0x1001
+	addi $9, $9, 131072
+	sw $9, 0($4) # origem
+	lui $9, 0x1001
+	sw $9, 4($4) # destino
+	addi $5, $0, 256
+	addi $6, $0, 128
 	jal desenhaImagem
 
 # desenha o personagem no canto esquerdo
 	addi $21, $21, -960
 	# desenha ele de lado
-	add $4, $0, $21
-	add $5, $0, $20
-	addi $6, $0, 16
-	add $7, $0, $23
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	sw $21, 0($4)		# origem
+	sw $20, 4($4)		# destino
+	addi $5, $0, 16		# largura
+	add $6, $0, $23		# altura
 	jal salvaTela
 
-	add $4, $0, $24 # endereco na memoria do que vou desenhar
-	add $5, $0, $21
-	addi $6, $0, 16
-	add $7, $0, $23
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	lui $24, 0x1001
+	addi $24, $24, 264192
+	sw $24, 0($4)
+	sw $21, 4($4)
+	addi $5, $0, 16
+	add $6, $0, $23
 	jal desenhaImagem
 
 # prepara dados para o loopJogo
+	# dados do link
+	add $10, $0, $21 # posicao atual do link na tela
+	lui $14, 0x1001
+	addi $14, $14, 264192
+	
 	# dados do NPC 1
 	lui $15, 0x1001
 	lui $18, 0x1001
@@ -682,85 +721,125 @@ linkAndaAteParede:
 
 	# j desenhaNPCs. aqui to desenhando uma vez pq o loop inicia apagando
 	# salva fundo e desenha NPC 1
-	add $4, $0, $15 # de onde vai tirar (onde esta o npc 1, ou seja, onde comeca a fazer a copia)
-	add $5, $0, $19 # onde vai escrever (buffer, ou seja, onde vai colar)
-	addi $6, $0, 16
-	addi $7, $0, 16
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	sw $15, 0($4)		# origem: onde esta o NPC 1
+	sw $19, 4($4)		# destino: buffer
+	addi $5, $0, 16		# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela # salva o cenario no buffer
-	add $4, $0, $18 # quem vou desenhar
-	add $5, $0, $15 # onde vou desenhar (mesmo lugar onde fez a copia)
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $18, 0($4)
+	sw $15, 4($4)
+	addi $5, $0, 16
 	addi $6, $0, 16
-	addi $7, $0, 16
 	jal desenhaImagem
 
 	# salva fundo e desenha NPC 2
-	add $4, $0, $20
-	add $5, $0, $24
-	addi $6, $0, 16
-	addi $7, $0, 16
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	sw $20, 0($4)		# origem
+	sw $24, 4($4)		# destino
+	addi $5, $0, 16		# largura
+	addi $6, $0, 16		# altura
 	jal salvaTela
-	add $4, $0, $23
-	add $5, $0, $20
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $23, 0($4)
+	sw $20, 4($4)
+	addi $5, $0, 16
 	addi $6, $0, 16
-	addi $7, $0, 16
 	jal desenhaImagem
 
 	# atraso
-	addi $4, $0, 50000
-	jal timerDelay
+    	lui  $4, 0x1001
+    	addi $4, $4, 278528 # inicio da memoria livre
+    	addi $5, $0, 50000
+    	jal timerDelay
 
 loopJogo:
-	# restaura cenario do NPC 2 (ordem inversa. npc 2 primeiro e npc 1 depois)
-	add $4, $0, $24 # buffer NPC2
-	add $5, $0, $20 # posicao atual NPC2
+	# restaura cenario link
+	lui $5, 0x1001
+	addi $5, $5, 275456
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $5, 0($4)
+	sw $10, 4($4)
+	addi $5, $0, 16
 	addi $6, $0, 16
-	addi $7, $0, 16
+	jal desenhaImagem
+	# restaura cenario do NPC 2 (ordem inversa. npc 2 primeiro e npc 1 depois)
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $24, 0($4)
+	sw $20, 4($4)
+	addi $5, $0, 16
+	addi $6, $0, 16
 	jal desenhaImagem
 
-	# restaura cenario do NPC 1
-	add $4, $0, $19 # buffer NPC1
-	add $5, $0, $15 # posicao atual NPC1
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $19, 0($4)
+	sw $15, 4($4)
+	addi $5, $0, 16
 	addi $6, $0, 16
-	addi $7, $0, 16
 	jal desenhaImagem
+
+# atualiza link
+	addi $7, $0, 'd'
+	beq $9, $7, andaLinkPraDireita
 	
+continuaAtualizacoes:
 # atualiza NPC 1
-	add $4, $15, $0 # posicao atual
-	add $5, $16, $0 # passo vertical (deslocamento no eixo y)
-	add $6, $17, $0 # passo horizontal (deslocamento no eixo x)
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	add $5, $15, $0		# posicao atual
+	add $6, $16, $0		# passo vertical
+	add $7, $17, $0		# passo horizontal
 	jal atualizaPosicaoNPC
 	add $11, $2, $0 # nova posicao em $11
 
-	add $4, $15, $0 # posicao antiga
-	add $5, $11, $0 # nova posicao
-	add $6, $16, $0 # passo vertical atual
-	jal atualizaPassoVertical # se vai pra cima ou pra baixo
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	add $5, $15, $0		# posicao atual
+	add $6, $11, $0		# nova posicao
+	add $7, $16, $0		# passo vertical atual
+	jal atualizaPassoVertical
 	add $16, $2, $0 # atualiza o passo
 
-	add $4, $15, $0
-	add $5, $11, $0
-	add $6, $17, $0 # passo horizontal atual
-	jal atualizaPassoHorizontal # se vai pra esquerda ou direita
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	add $5, $15, $0		# posicao atual
+	add $6, $11, $0		# nova posicao
+	add $7, $17, $0		# passo horizontal atual
+	jal atualizaPassoHorizontal
 	add $17, $2, $0 # atualiza o passo
 
 	add $15, $11, $0 # atualiza posicao NPC1
 
 # atualiza NPC 2
-	add $4, $20, $0 # posicao atual
-	add $5, $21, $0 # passo vertical (deslocamento no eixo y)
-	add $6, $22, $0 # passo horizontal (deslocamento no eixo x)
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	add $5, $20, $0		# posicao atual
+	add $6, $21, $0		# passo vertical
+	add $7, $22, $0		# passo horizontal
 	jal atualizaPosicaoNPC
 	add $11, $2, $0 # nova posicao em $11
 
-	add $4, $20, $0 # posicao antiga
-	add $5, $11, $0 # nova posicao
-	add $6, $21, $0 # passo vertical atual
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	add $5, $20, $0		# posicao atual
+	add $6, $11, $0		# nova posicao
+	add $7, $21, $0		# passo vertical atual
 	jal atualizaPassoVertical
 	add $21, $2, $0
 
-	add $4, $20, $0
-	add $5, $11, $0
-	add $6, $22, $0 # passo horizontal atual
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	add $5, $20, $0		# posicao atual
+	add $6, $11, $0		# nova posicao
+	add $7, $22, $0		# passo horizontal atual
 	jal atualizaPassoHorizontal
 	add $22, $2, $0
 
@@ -773,251 +852,445 @@ loopJogo:
 
 #desenhaNPCs:
 	# salva fundo e desenha NPC 1
-	add $4, $0, $15
-	add $5, $0, $19
-	addi $6, $0, 16
-	addi $7, $0, 16
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	sw $15, 0($4)		# origem
+	sw $19, 4($4)		# destino
+	addi $5, $0, 16		# largura
+	addi $6, $0, 16		# altura
 	jal salvaTela
-	add $4, $0, $18
-	add $5, $0, $15
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $18, 0($4)
+	sw $15, 4($4)
+	addi $5, $0, 16
 	addi $6, $0, 16
-	addi $7, $0, 16
 	jal desenhaImagem
 
 	# salva fundo e desenha NPC 2
-	add $4, $0, $20
-	add $5, $0, $24
-	addi $6, $0, 16
-	addi $7, $0, 16
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	sw $20, 0($4)		# origem
+	sw $24, 4($4)		# destino
+	addi $5, $0, 16		# largura
+	addi $6, $0, 16		# altura
 	jal salvaTela
-	add $4, $0, $23
-	add $5, $0, $20
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $23, 0($4)
+	sw $20, 4($4)
+	addi $5, $0, 16
 	addi $6, $0, 16
-	addi $7, $0, 16
+	jal desenhaImagem
+
+# desenha link
+
+	lui $4, 0x1001
+	addi $4, $4, 278528	# $4 = memoria temporaria
+	lui $5, 0x1001
+	addi $5, $5, 275456
+	sw $10, 0($4)		# origem
+	sw $5, 4($4)		# destino
+	addi $5, $0, 16		# largura
+	addi $6, $0, 16		# altura
+	jal salvaTela
+	lui $4, 0x1001
+	addi $4, $4, 278528
+	sw $14, 0($4)
+	sw $10, 4($4)
+	addi $5, $0, 16
+	addi $6, $0, 16
 	jal desenhaImagem
 
 	# atraso
-	addi $4, $0, 50000
-	jal timerDelay
+    	lui  $4, 0x1001
+    	addi $4, $4, 278528 # inicio da memoria livre
+    	addi $5, $0, 50000
+    	jal timerDelay
+	
+# verifica entrada do jogador:
+	li $4, 0xffff0000
+	lw $9, 0($4)
+
+	beq $9, $0, continuaJogo
+	lw $9, 4($4)
+	addi $7, $0, 13
+	beq $9, $7, pausaJogo
+continuaJogo:
 
 	j loopJogo
+
+andaLinkPraDireita:
+	add $5, $10, $0		# posicao atual
+	add $6, $0, $0		# deslocamento vertical
+	addi $7, $0, 8		# deslocamento horizontal
+    	lui  $4, 0x1001
+    	addi $4, $4, 278528
+	jal tentaMover
+	add $10, $2, $0
+	
+	lui $4, 0x1001
+	addi $4, $4, 264192
+	bne $14, $4, andaLinkPraDireitaFim
+	lui $4, 0x1001
+	addi $4, $4, 265216
+	
+andaLinkPraDireitaFim:
+	add $14, $0, $4
+	j continuaAtualizacoes
+
+pausaJogo:
+# verifica entrada do jogador:
+	li $4, 0xffff0000
+	lw $5, 0($4)
+
+	beq $5, $0, pulaLeitura
+	lw $6, 4($4)
+	addi $7, $0, 'd'
+	beq $6, $7, continuaJogo
+pulaLeitura:
+
+	# atraso
+    	lui  $4, 0x1001
+    	addi $4, $4, 278528 # inicio da memoria livre
+    	addi $5, $0, 50000
+    	jal  timerDelay
+
+	j pausaJogo
 
 fim:
 	addi $2, $0, 10
 	syscall
 	
 # rotina que atualiza posicao do NPC com recuo (desvio vertical) e desvio horizontal ao colidir verticalmente
-# entradas: $4 = posicao atual, $5 = passo vertical, $6 = passo horizontal
-# saida: $2 = nova posicao (ja com recuo ou desvio se necessario)
-# usa: $2 $3 $4 $5 $6 $7 $8 $9 $11 $12 $13 $14 $31 sem preservar
+# $4 = endereco de inicio da memoria temporaria
+# $5 = posicao atual
+# $6 = passo vertical
+# $7 = passo horizontal
+# retorna $2 = nova posicao (ja com recuo ou desvio se necessario)
 atualizaPosicaoNPC:
-	add $3, $0, $31 # salva retorno em $3
-	add $12, $0, $5 # passo vertical
-	add $13, $0, $6 # passo horizontal
-	add $14, $0, $4 # posicao original (base)
+	sw $5, 0($4)
+	sw $6, 4($4)
+	sw $7, 8($4)
+	
+	sw $8, 12($4)
+	
+	add $8, $0, $31 # salva retorno em $8
 
 	# tenta mover apenas na vertical
-	add $4, $14, $0
-	add $5, $12, $0
-	add $6, $0, $0
+	add $5, $5, $0		# posicao atual
+	add $6, $6, $0		# deslocamento vertical
+	add $7, $0, $0		# deslocamento horizontal
+	addi $4, $4, 16		# $4 = memoria temporaria
 	jal tentaMover
-	bne $2, $14, retornaOK # se moveu, retorna nova posicao
+	subi $4, $4, 16
+	bne $2, $5, retornaOK
 
 	# colidiu, tenta recuar
-	sub $12, $0, $12 # inverte passo vertical (se tiver subindo, vai descer, e vice versa)
-	add $4, $14, $0
-	add $5, $12, $0
-	add $6, $0, $0
+	add $5, $5, $0		# posicao atual
+	sub $6, $0, $6 		# inverte passo vertical (se tiver subindo, vai descer, e vice versa)
+	add $7, $0, $0		# deslocamento horizontal
+	addi $4, $4, 16
 	jal tentaMover
-	bne $2, $14, baseRecuo # recuo livre, atualiza base
+	subi $4, $4, 16
+	bne $2, $5, baseRecuo
 	j tentaDesvio # recuo bloqueado, mantem base original
 
 baseRecuo:
-	add $14, $2, $0 # base = posicao do recuo
+	add $5, $2, $0 # base = posicao do recuo
 
 tentaDesvio:
 	# tenta base + passo horizontal
-	add $4, $14, $0
-	add $5, $0, $0
-	add $6, $13, $0
+	add $5, $5, $0		# posicao atual
+	add $6, $0, $0		# deslocamento vertical
+	lw $7, 8($4)		# deslocamento horizontal
+	addi $4, $4, 16
 	jal tentaMover
-	bne $2, $14, retornaOK # desvio conseguiu
+	subi $4, $4, 16
+	bne $2, $5, retornaOK # desvio conseguiu
 
 	# tenta base - passo horizontal
-	add $4, $14, $0
-	add $5, $0, $0
-	sub $6, $0, $13
+	add $5, $5, $0		# posicao atual
+	add $6, $0, $0		# deslocamento vertical
+	sub $7, $0, $7		# deslocamento horizontal (invertido)
+	addi $4, $4, 16
 	jal tentaMover
-	bne $2, $14, retornaOK
+	subi $4, $4, 16
+	bne $2, $5, retornaOK
 
 	# encurralado, retorna a base
-	add $2, $14, $0
+	add $2, $5, $0
 
 retornaOK:
-	add $31, $3, $0 # restaura retorno
+	add $31, $8, $0 # restaura retorno
+	lw $5, 0($4)
+	lw $6, 4($4)
+	lw $7, 8($4)
+	
+	lw $8, 12($4)
 	jr $31
 
 # aplica o deslocamento vertical e horizontal a partir da posicao atual, se nao encontrar barreira
 # se o bloco 16x16 no destino estiver livre retorna a nova posicao
 # caso contrario retorna a mesma posicao
-# entradas: $4 = posicao atual, $5 = deslocamento vertical, $6 = deslocamento horizontal
-# saida: $2 = nova posicao ou a original se colidiu
-# usa: $2 $4 $5 $6 $7 $8 $9 $10 $11 $31 se preservar
+# $4 = endereco de inicio da memoria temporaria
+# $5 = posicao atual
+# $6 = deslocamento vertical
+# $7 = deslocamento horizontal
+# retorna $2 = nova posicao ou a original se colidiu
 tentaMover:
-	add $11, $0, $31 # salva retorno
-	add $10, $0, $4 # posicao original
-	add $8, $10, $5 # candidato = original + dy
-	add $8, $8, $6 # candidato += dx
-	add $4, $8, $0 # endereco do bloco 16x16
-	addi $5, $0, 16
+	sw $5, 0($4)
+	sw $6, 4($4)
+	sw $7, 8($4)
+	
+	sw $8, 12($4)
+	sw $9, 16($4)
+	sw $10, 20($4)
+	
+	add $8, $0, $31 # salva retorno
+
+	add $10, $6, $5 # candidato = original + dy
+	add $10, $10, $7 # candidato += dx
+	
+	addi $4, $4, 24	# memoria temporaria
+	li $9, 0x003D251E
+	sw $9, 0($4)		# cor alvo
+	add $5, $10, $0		# endereco do bloco 16x16
 	addi $6, $0, 16
-	li $7, 0x003D251E
+	addi $7, $0, 16
 	jal procuraCor
-	beq $2, $0, tentaMoverFim # sem colisao, candidato mantido em $8
-	add $8, $10, $0 # colidiu, $8 = posicao original
+	subi $4, $4, 24
+	
+	beq $2, $0, tentaMoverFim # sem colisao, candidato mantido em $10
+	lw $10, 0($4) # colidiu, atualiza candidato para 0($4) = posicao original
 tentaMoverFim:
-	add $2, $8, $0 # retorna $8
-	add $31, $11, $0
+	add $2, $10, $0 # retorna $10 (candidato)
+	add $31, $8, $0
+
+	lw $5, 0($4)
+	lw $6, 4($4)
+	lw $7, 8($4)
+	
+	lw $8, 12($4)
+	lw $9, 16($4)
+	lw $10, 20($4)
 	jr $31
 
 # calcula o novo passo vertical a partir da diferenca das posicoes
 # se diferenca == 0 (encurralado em ambos eixos), mantem o passo atual
-# entradas: $4 = posicao atual, $5 = nova posicao, $6 = passo vertical atual
-# saida: $2 = novo passo vertical (multiplo de 1024, com sinal)
-# usa: $2, $4, $5, $6, $8 sem preservar
+# $4 = endereco de inicio da memoria temporaria
+# $5 = posicao atual 
+# $6 = nova posicao
+# $7 = passo vertical atual
+# retorna $2 = novo passo vertical (multiplo de 1024, com sinal)
 atualizaPassoVertical:
-	sub $8, $5, $4 # diferenca
+	sw $8, 0($4)
+	
+	sub $8, $6, $5 # diferenca
 	bne $8, $0, decompoeVertical
-	add $2, $6, $0 # diferenca == 0: mantem passo atual
-	jr $31
+	add $2, $7, $0 # diferenca == 0: mantem passo atual
+	j retornaVertical
 
 decompoeVertical:
 	# 1028 -> (1024 + 4) + 512 -> 2^5 = 1024 
 	addi $8, $8, 512 # bias de arredondamento
 	sra $2, $8, 10
 	sll $2, $2, 10
+retornaVertical:
+	lw $8, 0($4)
 	jr $31
 
 # calcula o novo passo horizontal a partir da diferenca de posicao
 # se diferenca == 0 (encurralado em ambos eixos), mantem o passo atual
-# entradas: $4 = posicao atual, $5 = nova posicao, $6 = passo horizontal atual
-# saida: $2 = novo passo horizontal (multiplo de 4, com sinal, em [-512,512))
-# usa: $2, $4, $5, $6, $8, $9 sem preservar
+# $4 = endereco de inicio da memoria temporaria
+# $5 = posicao atual
+# $6 = nova posicao
+# $7 = passo horizontal atual
+# retorna $2 = novo passo horizontal (multiplo de 4, com sinal, em [-512,512))
 atualizaPassoHorizontal:
-	sub $8, $5, $4 # diferenca
+	sw $8, 0($4)
+	sw $9, 4($4)
+	
+	sub $8, $6, $5 # diferenca
 	bne $8, $0, decompoeHorizontal
-	add $2, $6, $0 # diferenca == 0: mantem passo atual
-	jr $31
+	add $2, $7, $0 # diferenca == 0: mantem passo atual
+	j retornaHorizontal
 decompoeHorizontal:
 	addi $9, $8, 512
 	sra $9, $9, 10
 	sll $9, $9, 10
 	sub $2, $8, $9  # resto
 	bne $2, $0, retornaHorizontal
-	add $2, $6, $0 # resto == 0: mantem passo atual (preserva direcao)
+	add $2, $7, $0 # resto == 0: mantem passo atual (preserva direcao)
 retornaHorizontal:
+	lw $8, 0($4)
+	lw $9, 4($4)
 	jr $31
 
 # copia de regiao de memoria (buffer) para um retangulo do cenario
 # considera 0xFFFFFFFF como transparencia
-# $4 = origem $5 = destino $6 = largura $7 = altura
-# usa $4, $5, $6, $7, $8, $9, $31 sem preservar
+# $4 = endereco de inicio da memoria livre
+# $5 = largura
+# $6 = altura
+# endereco de origem em 0($4)
+# endereco de destino em 4($4)
 desenhaImagem:
-	sll $8, $6, 2 # bytes por linha = largura * 4
+	sw $5, 8($4)
+	sw $6, 12($4)
+	
+	sw $7, 16($4)
+	sw $8, 20($4)
+	sw $9, 24($4)
+	
+	lw $7, 0($4) # carrega origem
+	lw $8, 4($4) # carrega destino
+
+desenhaLinha:
+	beq $6, $0, desenhaFim # altura zerada encerra
+
+desenhaPixel:
+	beq $5, $0, desenhaProximaLinha # fim da linha, ajusta ponteiro destino
+	
+	lw  $9, 0($7) # le pixel da origem
+	nor $9, $9, $0 # inverte bits (0xFFFFFFFF vira 0x00000000). fiz isso pra economizar registrador
+	beq $9, $0, desenhaProximoPixel # se era 0xFFFFFFFF, nao pinte
+
+	nor $9, $9, $0 # restaura cor original
+	sw $9, 0($8) # escreve pixel no destino
+
+desenhaProximoPixel:
+	addi $7, $7, 4 # avanca origem
+	addi $8, $8, 4 # avanca destino
+	subi $5, $5, 1 # decrementa colunas restantes
+	j desenhaPixel
 
 desenhaProximaLinha:
-	beq $7, $0, desenhaFim # altura zerada encerra
-	add $6, $8, $0 # reinicia contador de largura
-
-desenhaProxPixel:
-	beq $6, $0, desenhaAjusta # fim da linha, ajusta ponteiro destino
-	lw  $9, 0($4) # le pixel da origem
-	nor $9, $9, $0 # inverte bits (0xFFFFFFFF vira 0x00000000). fiz isso pra economizar registrador
-	beq $9, $0, desenhaPula # se era 0xFFFFFFFF, nao pinte
-	nor $9, $9, $0 # restaura cor original
-	sw $9, 0($5) # escreve pixel no destino
-
-desenhaPula:
-	addi $4, $4, 4 # avanca origem
-	addi $5, $5, 4 # avanca destino
-	addi $6, $6, -4 # decrementa bytes restantes
-	j desenhaProxPixel
-
-desenhaAjusta:
-	sub $5, $5, $8 # recua ao inicio da linha no destino
-	addi $5, $5, 1024 # desce para proxima linha da tela
-	addi $7, $7, -1
-	j desenhaProximaLinha
+	lw $5, 8($4)
+	sll $9, $5, 2
+	sub $8, $8, $9 # recua ao inicio da linha no destino
+	addi $8, $8, 1024 # desce para proxima linha da tela
+	subi $6, $6, 1
+	j desenhaLinha
 
 desenhaFim:
-	jr   $31
+	lw $5, 8($4)
+	lw $6, 12($4)
+	
+	lw $7, 16($4)
+	lw $8, 20($4)
+	lw $9, 24($4)
+	jr $31
 
 # copia de retangulo do cenario para uma regiao de memoria (buffer)
-# $4 = origem $5 = destino $6 = largura $7 = altura
-# usa $4, $5, $6, $7, $8, $9, $31 sem preservar
+# $4 = endereco de inicio da memoria temporaria
+# $5 = largura
+# $6 = altura
+# endereco de origem em 0($4)
+# endereco de destino em 4($4)
 salvaTela:
-	sll $8, $6, 2 # bytes por linha = largura * 4
+	sw $5, 8($4)
+	sw $6, 12($4)
+	
+	sw $7, 16($4)
+	sw $8, 20($4)
+	sw $9, 24($4)
+	
+	lw $7, 0($4) # carrega origem
+	lw $8, 4($4) # carrega destino
+
+salvaLinha:
+	beq $6, $0, salvaFim # altura eh contador. se zerada, encerra
+
+salvaPixel:
+	beq $5, $0, salvaProximaLinha
+	
+	lw $9, 0($7) # le pixel da tela
+	sw $9, 0($8) # escreve no buffer
+	
+	addi $7, $7, 4
+	addi $8, $8, 4
+	subi $5, $5, 1
+	j salvaPixel
 
 salvaProximaLinha:
-	beq $7, $0, salvaFim # altura eh contador. se zerada, encerra
-	add $6, $8, $0 # largura
-
-salvaProxPixel:
-	lw $9, 0($4) # le pixel da tela
-	sw $9, 0($5) # escreve no buffer
-	addi $4, $4, 4
-	addi $5, $5, 4
-	addi $6, $6, -4
-	bne $6, $0, salvaProxPixel
-
-	sub $4, $4, $8 # recua ao inicio da faixa copiada
-	addi $4, $4, 1024 # avanca para proxima faixa da tela
-	addi $7, $7, -1
-	j salvaProximaLinha
+	lw $5, 8($4)
+	sll $9, $5, 2
+	sub $7, $7, $9 # recua ao inicio da linha copiada
+	addi $7, $7, 1024 # avanca para proxima linha da tela
+	subi $6, $6, 1
+	j salvaLinha
 
 salvaFim:
+	lw $5, 8($4)
+	lw $6, 12($4)
+	
+	lw $7, 16($4)
+	lw $8, 20($4)
+	lw $9, 24($4)
 	jr $31
 
 # procura uma cor em uma area retangular da tela
-# $4 = endereco inicial, $5 = largura, $6 = altura, $7 = cor alvo
+# $4 = endereco de inicio da memoria temporaria
+# $5 = endereco inicial
+# $6 = largura
+# $7 = altura
+# cor alvo armazenada em 0($4)
 # retorna $2 = 1 se achou, 0 caso contrario
-# usa $2, $4, $5, $6, $7, $8, $9, $31 sem preservar
 procuraCor:
-	addi $2, $0, 0 # retorno padrao: nao achou
-	sll  $26, $5, 2 # bytes por linha = largura * 4
+	sw $5, 4($4)		# salva endereco inicial
+	sw $6, 8($4)		# salva largura
+	sw $7, 12($4)		# salva altura
+	
+	sw $8, 16($4)		# salva $8 para usa-lo como temporario
+	sw $9, 20($4)		# salva $9 para usa-lo como temporario
+	
+	addi $2, $0, 0		# retorno padrao: nao achou
+
+procuraLinha:
+	beq $7, $0, procuraFim	# altura eh contador. quando zerada, encerra
+
+procuraPixel:
+	beq $6, $0, procuraProximaLinha # fim da linha, vai pra a proxima
+	
+	lw $8, 0($5)		# pixel da tela
+	lw $9, 0($4)		# cor alvo
+	beq $8, $9, achouCor	# achou a cor procurada
+
+	addi $5, $5, 4		# avanca endereco para a proxima coluna
+	subi $6, $6, 1		# reduz contador de colunas restantes
+	j procuraPixel
 
 procuraProximaLinha:
-	beq  $6, $0, procuraFim # altura eh contador. quando zerada, encerra
-	add  $5, $26, $0 # reinicia contador de colunas da linha (largura)
-
-procuraProxPixel:
-	beq  $5, $0, procuraAjusta # fim da linha, ajusta endereco
-	lw   $9, 0($4) # le pixel da tela
-	beq  $9, $7, achouCor # achou a cor procurada
-	addi $4, $4, 4 # avanca ponteiro
-	addi $5, $5, -4 # decrementa bytes restantes
-	j procuraProxPixel
-
-procuraAjusta:
-	sub  $4, $4, $26 # recua ao inicio da linha atual (final da linha atual - largura * 4)
-	addi $4, $4, 1024 # desce para a proxima linha da tela
-	addi $6, $6, -1 # decrementa altura
-	j procuraProximaLinha
+	lw $6, 8($4) 		# reinicia contador de colunas
+	sll $9, $6, 2		# $9 = largura em bytes (largura * 4)
+	sub $5, $5, $9		# volta o endereco para o inicio da linha atual
+	addi $5, $5, 1024	# avanca endereco para a proxima linha
+	subi $7, $7, 1		# reduz contador de linhas restantes
+	j procuraLinha
 
 achouCor:
-	addi $2, $0, 1 # retorna 1
+	addi $2, $0, 1		# retorna 1
 
 procuraFim:
+	lw $5, 4($4)		# restaura endereco inicial
+	lw $6, 8($4)		# restaura largura
+	lw $7, 12($4)		# restaura altura
+	
+	lw $8, 16($4)		# restaura $8 usado como temporario
+	lw $9, 20($4)		# restaura $9 usado como temporario
 	jr $31
 
 # rotina de atraso
-# $4 = numero de iteracoes
-# usa $4 e $31
+# $4 = endereco de inicio da memoria temporaria
+# $5 = numero de iteracoes
 timerDelay:
+	sw $5, 0($4) # salva na memoria
+
 timerDelayLoop:
-	beq $4, $0, timerDelayFim
-	nop
-	addi $4, $4, -1
+	beq $5, $0, timerDelayFim
+	subi $5, $5, 1
 	j timerDelayLoop
+
 timerDelayFim:
+	lw $5, 0($4) # restaura da memoria
 	jr $31
