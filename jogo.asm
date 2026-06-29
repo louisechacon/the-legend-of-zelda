@@ -1048,19 +1048,19 @@ esperaIniciarJogo:
 
 subirEscada:
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	sw $21, 0($4)		# origem = $21
-	sw $20, 4($4)		# destino = $20
-	addi $5, $0, 16		# largura
-	add $6, $0, $23		# altura
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	sw $21, 0($4) # origem = $21
+	sw $20, 4($4) # destino = $20
+	addi $5, $0, 16	# largura
+	add $6, $0, $23	# altura
 	jal salvaTela
 
 	lui $4, 0x1001
 	addi $4, $4, 807936
-	sw $24, 0($4)		# origem
-	sw $21, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	add $6, $0, $23		# altura
+	sw $24, 0($4) # origem
+	sw $21, 4($4) # destino
+	addi $5, $0, 16	# largura
+	add $6, $0, $23	# altura
 	jal desenhaImagem
 
     	lui  $4, 0x1001
@@ -1070,10 +1070,10 @@ subirEscada:
 	
 	lui $4, 0x1001
 	addi $4, $4, 807936
-	sw $20, 0($4)		# origem
-	sw $21, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	add $6, $0, $23		# altura
+	sw $20, 0($4) # origem
+	sw $21, 4($4) # destino
+	addi $5, $0, 16	# largura
+	add $6, $0, $23	# altura
 	jal desenhaImagem
 	
 	addi $21, $21, -2048
@@ -1086,11 +1086,11 @@ subirEscada:
 	addi $22, $22, 28672  # (1024 x 28 pra descer um bloco e mais um pouquinho)
 linkDescendo:
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	sw $21, 0($4)		# origem
-	sw $20, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	add $6, $0, $23		# altura
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	sw $21, 0($4) # origem
+	sw $20, 4($4) # destino
+	addi $5, $0, 16	# largura
+	add $6, $0, $23	# altura
 	jal salvaTela
 
 	lui $4, 0x1001
@@ -1132,11 +1132,11 @@ linkDescendo:
 linkAndaAteParede:	
 	# desenha ele de lado
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	sw $21, 0($4)		# origem
-	sw $20, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	add $6, $0, $23		# altura
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	sw $21, 0($4) # origem
+	sw $20, 4($4) # destino
+	addi $5, $0, 16	# largura
+	add $6, $0, $23	# altura
 	jal salvaTela
 
 	lui $4, 0x1001
@@ -1229,11 +1229,11 @@ linkAndaAteParede:
 
 	# salva fundo e desenha NPC 2
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	sw $20, 0($4)		# origem
-	sw $24, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	sw $20, 0($4) # origem
+	sw $24, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	lui $4, 0x1001
 	addi $4, $4, 807936
@@ -1246,24 +1246,24 @@ linkAndaAteParede:
 # desenha o personagem no canto esquerdo
 	# salva cenario espada
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
+	addi $4, $4, 807936 # $4 = memoria temporaria
 	lui $5, 0x1001
 	addi $5, $5, 674816
-	sw $25, 0($4)		# origem
-	sw $5, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	sw $25, 0($4) # origem
+	sw $5, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	
 	# desenha o link de lado
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
+	addi $4, $4, 807936 # $4 = memoria temporaria
 	lui $5, 0x1001
 	addi $5, $5, 671744
-	sw $10, 0($4)		# origem
-	sw $5, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	sw $10, 0($4) # origem
+	sw $5, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	lui $4, 0x1001
 	addi $4, $4, 807936
@@ -1334,26 +1334,26 @@ loopJogo:
 continuaAtualizacoes:
 # atualiza NPC 1
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	add $5, $15, $0		# posicao atual
-	add $6, $16, $0		# passo vertical
-	add $7, $17, $0		# passo horizontal
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	add $5, $15, $0	# posicao atual
+	add $6, $16, $0	# passo vertical
+	add $7, $17, $0	# passo horizontal
 	jal atualizaPosicaoNPC
 	add $11, $2, $0 # nova posicao em $11
 
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	add $5, $15, $0		# posicao atual
-	add $6, $11, $0		# nova posicao
-	add $7, $16, $0		# passo vertical atual
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	add $5, $15, $0	# posicao atual
+	add $6, $11, $0	# nova posicao
+	add $7, $16, $0	# passo vertical atual
 	jal atualizaPassoVertical
 	add $16, $2, $0 # atualiza o passo
 
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	add $5, $15, $0		# posicao atual
-	add $6, $11, $0		# nova posicao
-	add $7, $17, $0		# passo horizontal atual
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	add $5, $15, $0	# posicao atual
+	add $6, $11, $0	# nova posicao
+	add $7, $17, $0	# passo horizontal atual
 	jal atualizaPassoHorizontal
 	add $17, $2, $0 # atualiza o passo
 
@@ -1361,26 +1361,26 @@ continuaAtualizacoes:
 
 # atualiza NPC 2
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	add $5, $20, $0		# posicao atual
-	add $6, $21, $0		# passo vertical
-	add $7, $22, $0		# passo horizontal
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	add $5, $20, $0	# posicao atual
+	add $6, $21, $0	# passo vertical
+	add $7, $22, $0	# passo horizontal
 	jal atualizaPosicaoNPC
 	add $11, $2, $0 # nova posicao em $11
 
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	add $5, $20, $0		# posicao atual
-	add $6, $11, $0		# nova posicao
-	add $7, $21, $0		# passo vertical atual
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	add $5, $20, $0	# posicao atual
+	add $6, $11, $0	# nova posicao
+	add $7, $21, $0	# passo vertical atual
 	jal atualizaPassoVertical
 	add $21, $2, $0
 
 	lui $4, 0x1001
 	addi $4, $4, 807936
-	add $5, $20, $0		# posicao atual
-	add $6, $11, $0		# nova posicao
-	add $7, $22, $0		# passo horizontal atual
+	add $5, $20, $0	# posicao atual
+	add $6, $11, $0	# nova posicao
+	add $7, $22, $0	# passo horizontal atual
 	jal atualizaPassoHorizontal
 	add $22, $2, $0
 
@@ -1403,13 +1403,13 @@ pulaAnimacaoNPC2:
 	beq $18, $19, desenhaONPC1 # $18 eh sprite do npc1; $19 eh o buffer. se forem iguais, significa que o npc1 morreu
 	# desenha o link para procurar colisao
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
+	addi $4, $4, 807936 # $4 = memoria temporaria
 	lui $5, 0x1001
 	addi $5, $5, 671744
-	sw $10, 0($4)		# origem
-	sw $5, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	sw $10, 0($4) # origem
+	sw $5, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	lui $4, 0x1001
 	addi $4, $4, 807936
@@ -1420,30 +1420,30 @@ pulaAnimacaoNPC2:
 	jal desenhaImagem
 
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x0080d010
-	sw $5, 0($4)		# cor alvo
-	add $5, $15, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $15, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
 	bne $2, $0, mostraTelaGameOver
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x00c84c0c
-	sw $5, 0($4)		# cor alvo
-	add $5, $15, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $15, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
 	bne $2, $0, mostraTelaGameOver
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x00fc9838
-	sw $5, 0($4)		# cor alvo
-	add $5, $15, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $15, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
@@ -1462,13 +1462,13 @@ pulaAnimacaoNPC2:
 	
 	# desenha espada para procurar colisao
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
+	addi $4, $4, 807936 # $4 = memoria temporaria
 	lui $5, 0x1001
 	addi $5, $5, 674816
-	sw $25, 0($4)		# origem
-	sw $5, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	sw $25, 0($4) # origem
+	sw $5, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	addi $7, $0, 'j'
 	bne $9, $7, desenhaONPC1
@@ -1481,30 +1481,30 @@ pulaAnimacaoNPC2:
 	jal desenhaImagem
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x00fbfbfb
-	sw $5, 0($4)		# cor alvo
-	add $5, $15, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $15, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
 	bne $2, $0, mataNPC1
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x000100a8
-	sw $5, 0($4)		# cor alvo
-	add $5, $15, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $15, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
 	bne $2, $0, mataNPC1
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x005d94fb
-	sw $5, 0($4)		# cor alvo
-	add $5, $15, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $15, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
@@ -1539,11 +1539,11 @@ mataNPC1:
 desenhaONPC1:
 	# salva fundo e desenha NPC 1
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	sw $15, 0($4)		# origem
-	sw $19, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	sw $15, 0($4) # origem
+	sw $19, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	lui $4, 0x1001
 	addi $4, $4, 807936
@@ -1557,13 +1557,13 @@ desenhaONPC1:
 	beq $23, $24, desenhaONPC2 # $18 eh sprite do npc2; $24 eh o buffer. se forem iguais, significa que o npc2 morreu
 	# desenha o link pra buscar colisao entre link e npc 2
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
+	addi $4, $4, 807936 # $4 = memoria temporaria
 	lui $5, 0x1001
 	addi $5, $5, 671744
-	sw $10, 0($4)		# origem
-	sw $5, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	sw $10, 0($4) # origem
+	sw $5, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	lui $4, 0x1001
 	addi $4, $4, 807936
@@ -1575,30 +1575,30 @@ desenhaONPC1:
 
 	# procura as cores do link
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x0080d010
-	sw $5, 0($4)		# cor alvo
-	add $5, $20, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $20, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
 	bne $2, $0, mostraTelaGameOver
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x00c84c0c
-	sw $5, 0($4)		# cor alvo
-	add $5, $20, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $20, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
 	bne $2, $0, mostraTelaGameOver
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x00fc9838
-	sw $5, 0($4)		# cor alvo
-	add $5, $20, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $20, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
@@ -1617,13 +1617,13 @@ desenhaONPC1:
 	
 	# desenha espada para procurar colisao
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
+	addi $4, $4, 807936 # $4 = memoria temporaria
 	lui $5, 0x1001
 	addi $5, $5, 674816
-	sw $25, 0($4)		# origem
-	sw $5, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	sw $25, 0($4) # origem
+	sw $5, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	addi $7, $0, 'j'
 	bne $9, $7, desenhaONPC2
@@ -1636,30 +1636,30 @@ desenhaONPC1:
 	jal desenhaImagem
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x00fbfbfb
-	sw $5, 0($4)		# cor alvo
-	add $5, $20, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $20, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
 	bne $2, $0, mataNPC2
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x000100a8
-	sw $5, 0($4)		# cor alvo
-	add $5, $20, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $20, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
 	bne $2, $0, mataNPC2
 	
 	lui $4, 0x1001
-	addi $4, $4, 807936	# memoria temporaria
+	addi $4, $4, 807936 # memoria temporaria
 	li $5, 0x005d94fb
-	sw $5, 0($4)		# cor alvo
-	add $5, $20, $0		# endereco do bloco 16x16
+	sw $5, 0($4) # cor alvo
+	add $5, $20, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
@@ -1696,11 +1696,11 @@ mataNPC2:
 desenhaONPC2:
 	# desenha o npc 2 de fato
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	sw $20, 0($4)		# origem
-	sw $24, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	sw $20, 0($4) # origem
+	sw $24, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	lui $4, 0x1001
 	addi $4, $4, 807936
@@ -1713,13 +1713,13 @@ desenhaONPC2:
 # desenha link
 	# desenha espada se apertou 'j'
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
+	addi $4, $4, 807936 # $4 = memoria temporaria
 	lui $5, 0x1001
 	addi $5, $5, 674816
-	sw $25, 0($4)		# origem
-	sw $5, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	sw $25, 0($4) # origem
+	sw $5, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	addi $7, $0, 'j'
 	bne $9, $7, desenhaOLink
@@ -1732,13 +1732,13 @@ desenhaONPC2:
 	jal desenhaImagem
 desenhaOLink:
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
+	addi $4, $4, 807936 # $4 = memoria temporaria
 	lui $5, 0x1001
 	addi $5, $5, 671744
-	sw $10, 0($4)		# origem
-	sw $5, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	sw $10, 0($4) # origem
+	sw $5, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	lui $4, 0x1001
 	addi $4, $4, 807936
@@ -1774,13 +1774,13 @@ continuaJogo:
 desenhaExplosao:
 	# desenha explosao 1
 	lui $4, 0x1001
-	addi $4, $4, 807936	# $4 = memoria temporaria
-	sw $13, 0($4)		# origem
+	addi $4, $4, 807936 # $4 = memoria temporaria
+	sw $13, 0($4) # origem
 	lui $5, 0x1001
 	addi $5, $5, 806912
-	sw $5, 4($4)		# destino
-	addi $5, $0, 16		# largura
-	addi $6, $0, 16		# altura
+	sw $5, 4($4) # destino
+	addi $5, $0, 16	# largura
+	addi $6, $0, 16	# altura
 	jal salvaTela
 	lui $4, 0x1001
 	addi $4, $4, 807936
@@ -2118,8 +2118,8 @@ tentaMover:
 	
 	addi $4, $4, 24	# memoria temporaria
 	li $9, 0x003D251E
-	sw $9, 0($4)		# cor alvo
-	add $5, $10, $0		# endereco do bloco 16x16
+	sw $9, 0($4) # cor alvo
+	add $5, $10, $0	# endereco do bloco 16x16
 	addi $6, $0, 16
 	addi $7, $0, 16
 	jal procuraCor
