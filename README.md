@@ -39,7 +39,7 @@ Configure o **Bitmap Display** exatamente com os valores abaixo. Assim, os gráf
 ## Executando o Jogo
 
 1. Vá em _Run > Assemble_ 
-2. Vá em ou _Run > Go_
+2. Vá em _Run > Go_
 
 # Controles
 
