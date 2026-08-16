@@ -16,7 +16,7 @@ Confira as instruções para rodar o jogo:
 ## Configuração do Ambiente
 
 1. Abra o **MARS**.
-2. Vá em **File > Open** e selecione o arquivo `jogo.asm`.
+2. Vá em **File > Open** e selecione o arquivo `main.asm`.
 3. Abra as ferramentas necessárias em **Tools**:
 
 - **Bitmap Display**
